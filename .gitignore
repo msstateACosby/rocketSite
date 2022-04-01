@@ -1,1 +1,3 @@
 secretKeyFile.txt
+rocketSite/__pycache__/*
+rocketTicket/__pycache__/*
