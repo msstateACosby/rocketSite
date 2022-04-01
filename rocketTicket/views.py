@@ -4,10 +4,16 @@ from django.http import HttpResponse
 
 from .models import Ticket
 
-# Create your views here.
-def index(request):
 
-    context = {'Title': "RocketTicket",'Tickets' : []}
+#create a tree like [{"head" : gemini, "children" : [{"head" : payload, "children" : [...]}]}]
+
+
+
+def index(request):
+    tickets=[]
+    for ticket in Ticket.objects.filter(parentTicket=None):
+        tickets.append(ticket.addNodeToTree())
+    context = {'title': "RocketTicket",'Tickets' : tickets}
     parentTickets = Ticket.objects.filter(parentTicket=None)
-    return render(request, 'rocktTicket/index.html', context)
+    return render(request, 'rocketTicket/index.html', context)
 

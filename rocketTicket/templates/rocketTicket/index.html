@@ -10,3 +10,10 @@
 
 </body>
 </html>
+{{Tickets|json_script:'ticketData'}}
+<script>
+    var data = JSON.parse(document.getElementById('ticketData').textContent);
+    console.log(data);
+    
+    
+</script>
