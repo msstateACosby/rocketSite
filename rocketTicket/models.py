@@ -14,11 +14,15 @@ class Ticket(models.Model):
 
     urlName = models.SlugField()
     dueDate = models.DateField(null=True)
-    parentTicket = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+    parentTicket = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
 
-    dependencies = models.ManyToManyField('self')
+    dependencies = models.ManyToManyField('self', blank=True)
     
     isComplete = models.BooleanField(default=False)
 
-    class TicketAdmin(admin.ModelAdmin):
-        prepopulated_fields = {"urlName": ("name", )}
+    def __str__(self):
+        return self.name
+
+    
+class TicketAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"urlName": ("name", ), "shortName" : ("longName",)}
