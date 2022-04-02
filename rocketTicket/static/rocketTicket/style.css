@@ -1,0 +1,78 @@
+
+body
+{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+.tree 
+{
+
+    border-radius: 3px;
+    border-width: 1px;
+    
+    
+    padding: 10px;
+    border-style: none;
+    float: left;
+}
+.subtree
+{
+    background-color: rgb(216, 213, 213);
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 10px;
+    border-color: black;
+    border-style: solid;
+    margin: 5px;
+    float: left;
+}
+.subtree-title
+{
+    
+    line-height: 5px;
+    margin:auto;
+    max-width: 30em;
+}
+
+.tree-container
+{
+    border-width: 0px;
+    border-top: 2px;
+    border-style: solid;
+    border-color: darkgray;
+    background-color: white;
+    clear:both;
+
+}
+#titleText
+{
+    
+    
+    -webkit-transform:scale(2,1); /* Safari and Chrome */
+    -moz-transform:scale(2,1); /* Firefox */
+    -ms-transform:scale(2,1); /* IE 9 */
+    -o-transform:scale(2,1); /* Opera */
+    transform:scale(2,1); /* W3C */
+    font-style:italic;
+    text-decoration: underline;
+    color:maroon;
+    text-shadow: 5px 5px black;
+    
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
+    font-size: 3rem;
+    
+    
+}
+.good
+{
+    background-color: forestgreen;
+}
+.mediocre
+{
+    background-color: yellow;
+}
+.bad
+{
+    background-color: red;
+}

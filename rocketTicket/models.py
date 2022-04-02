@@ -1,3 +1,4 @@
+from datetime import date, datetime, timedelta
 from statistics import mode
 from tkinter import CASCADE
 from django.db import models
@@ -8,18 +9,23 @@ from sympy import false, true
 
 class Ticket(models.Model):
     name = models.CharField(max_length=50)
-    longName = models.TextField()
-    shortName = models.CharField(max_length=200)
+    longDescription = models.TextField()
+    shortDescription = models.CharField(max_length=200)
     creationDate = models.DateField()
 
     urlName = models.SlugField()
     dueDate = models.DateField(null=True)
+
+    
     parentTicket = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='parent')
 
-    dependencies = models.ManyToManyField('self', blank=True)
-    children = models.ManyToManyField('self', blank=True, symmetrical=False)
+    #yeah these related names are dumb, but they work
+    dependencies = models.ManyToManyField('self', blank=True, symmetrical=False, related_name="dependence")
+    
+    children = models.ManyToManyField('self', blank=True, symmetrical=False, related_name="childs")
     
     isComplete = models.BooleanField(default=False)
+
 
     previousParentTicket = None
     def __init__(self, *args, **kwargs):
@@ -50,12 +56,28 @@ class Ticket(models.Model):
                 
                 self.previousParentTicket = self.parentTicket
 
+    def getWarningState(self):
+        returnText = "neutral"
+        if (datetime.now().date() > self.dueDate):
+            returnText="bad"
+        if (datetime.now().date() + timedelta(weeks=2) > self.dueDate):
+            returnText="mediocre"
+        if (self.isComplete):
+            returnText = "good"
+        return returnText
+
     def addNodeToTree(self):
-        nodeDict = {"title" : self.name, "children": []}
+        nodeDict = {
+            "title" : self.name, 
+            "shortDescription": self.shortDescription, 
+            "dueDate": self.dueDate.strftime("%m/%d/%Y"),
+            "warningState" : self.getWarningState(),
+            "children": []
+        }
         for child in self.children.all():
             nodeDict["children"].append(child.addNodeToTree())
         return nodeDict
 
     
 class TicketAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"urlName": ("name", ), "shortName" : ("longName",)}
+    prepopulated_fields = {"urlName": ("name", )}

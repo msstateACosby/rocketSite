@@ -1,0 +1,16 @@
+{% for child in children %}
+    <div class="subtree {{child.warningState}}">
+        <div class=subtree-title>
+        <h3> {{ child.title }} </h1>
+            <p style="float:left; padding-right:5px"> {{ child.shortDescription}}</p> <p style="float:right;"> Due: {{child.dueDate}}</p>
+        
+        </div>
+
+        {% if child.children|length %}
+            <div class="tree-container">
+            
+                {% include "rocketTicket/node.html" with children=child.children %}
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}

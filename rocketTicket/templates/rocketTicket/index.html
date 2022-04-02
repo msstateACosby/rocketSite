@@ -2,18 +2,49 @@
 <html>
 <head>
     <title> {{title}}</title>
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'rocketTicket/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'rocketTicket/rocketIco.png' %}">
 </head>
 <body>
-    <h1>
-        Hello, welcome.
+    <h1 id="titleText">
+        Rocket Ticket
     </h1>
+    <div class=tree>
+    {% include "rocketTicket/node.html" with children=Tickets%} 
+    </div>
+    
 
 </body>
 </html>
+<!--
 {{Tickets|json_script:'ticketData'}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     var data = JSON.parse(document.getElementById('ticketData').textContent);
     console.log(data);
+    for (const child of data)
+    {
+        addNodeToHtml("root", child)
+    }
+
+    function addNodeToHtml (parentTitle, element)
+    {
+        
+        let newDiv = "<div class=subtree> <div class=subtree-title> <h3>" + element.title + " </h3>" + 
+             "<p> "+ element.shortDescription+"</p></div>" +
+            "<div class=tree-container id="+ element.title+"></div></div>";
+        $("#"+parentTitle).append(newDiv);
+        console.log(element)
+        for (const child of element.children)
+        {
+            addNodeToHtml(element.title, child);
+        }
+
+        
+    }
     
     
 </script>
+-->

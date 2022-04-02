@@ -13,6 +13,9 @@ def index(request):
     tickets=[]
     for ticket in Ticket.objects.filter(parentTicket=None):
         tickets.append(ticket.addNodeToTree())
+
+
+        
     context = {'title': "RocketTicket",'Tickets' : tickets}
     parentTickets = Ticket.objects.filter(parentTicket=None)
     return render(request, 'rocketTicket/index.html', context)
