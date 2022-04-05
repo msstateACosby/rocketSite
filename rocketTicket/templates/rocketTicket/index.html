@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> {{title}}</title>
     {% load static %}
 
@@ -8,43 +11,69 @@
     <link rel="icon" type="image/x-icon" href="{% static 'rocketTicket/rocketIco.png' %}">
 </head>
 <body>
-    <h1 id="titleText">
-        Rocket Ticket
-    </h1>
+    <div id = "triggerDebug" style = "width: 200px; height: 3em; background-color: white; color: black; float: left">
+        <h3> Debug Trigger <h3>
+    </div>
+    <div id='titleText'>
+        <h1>
+            Rocket Ticket
+        </h1>
+    </div>
     <div class=tree>
-    {% include "rocketTicket/node.html" with children=Tickets%} 
+        {% include "rocketTicket/node.html" with children=Tickets%} 
+        </div>
+    <div id="svgcontainer">
+        <svg id="svg">
+            {% for connection in ConnectionList %}
+            <line class = "line" id= "line{{ forloop.counter0 }}"/>
+
+            {% endfor %}
+        </svg>
     </div>
     
 
 </body>
 </html>
-<!--
-{{Tickets|json_script:'ticketData'}}
+
+{{ConnectionList|json_script:'ConnectionList'}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    var data = JSON.parse(document.getElementById('ticketData').textContent);
-    console.log(data);
-    for (const child of data)
-    {
-        addNodeToHtml("root", child)
-    }
+    var connectionList = JSON.parse(document.getElementById('ConnectionList').textContent);
+    console.log(connectionList);
+    var i = 0;
+    refreshLines();
 
-    function addNodeToHtml (parentTitle, element)
-    {
-        
-        let newDiv = "<div class=subtree> <div class=subtree-title> <h3>" + element.title + " </h3>" + 
-             "<p> "+ element.shortDescription+"</p></div>" +
-            "<div class=tree-container id="+ element.title+"></div></div>";
-        $("#"+parentTitle).append(newDiv);
-        console.log(element)
-        for (const child of element.children)
+    function refreshLines(){
+        var svg = $('#svg')
+        $('#svgcontainer').remove(svg);
+        for (connection of connectionList)
         {
-            addNodeToHtml(element.title, child);
+            let line = $('#line' + i);
+            //$('#svg').remove(line);
+            let div1 = $('#' + connection[0]);
+            let div2 = $('#' + connection[1]);
+            
+            
+            let x1 = div1.offset().left + (div1.width()/2);
+            let y1 = div1.offset().top + (div1.height())+2;
+            let x2 = div2.offset().left + (div2.width()/2);
+            let y2 = div2.offset().top + 2;
+            //$("#svg").append('<line class = "line" id= "line' + i + '"/>').attr('x1',x1).attr('y1',y1).attr('x2',x2).attr('y2',y2);
+            line.attr('x1',x1).attr('y1',y1).attr('x2',x2).attr('y2',y2);
+            i++;
         }
-
         
+        //$('#svgcontainer').append(svg);
+        
+        
+
     }
-    
+    $('#triggerDebug').click(function () 
+    {
+        $('.subtree').toggleClass("debug-subtree");
+        $('.line').toggleClass("debug-hidesvg");
+
+    });
+    window.addEventListener('resize', refreshLines);
     
 </script>
--->

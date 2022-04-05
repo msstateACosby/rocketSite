@@ -11,12 +11,13 @@ from .models import Ticket
 
 def index(request):
     tickets=[]
+    connectionList = []
     for ticket in Ticket.objects.filter(parentTicket=None):
-        tickets.append(ticket.addNodeToTree())
+        tickets.append(ticket.addNodeToTree(connectionList))
 
 
-        
-    context = {'title': "RocketTicket",'Tickets' : tickets}
+
+    context = {'title': "RocketTicket",'Tickets' : tickets, 'ConnectionList' : connectionList}
     parentTickets = Ticket.objects.filter(parentTicket=None)
     return render(request, 'rocketTicket/index.html', context)
 

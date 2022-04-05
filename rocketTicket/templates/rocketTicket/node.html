@@ -1,9 +1,11 @@
 {% for child in children %}
-    <div class="subtree {{child.warningState}}">
-        <div class=subtree-title>
-        <h3> {{ child.title }} </h1>
-            <p style="float:left; padding-right:5px"> {{ child.shortDescription}}</p> <p style="float:right;"> Due: {{child.dueDate}}</p>
+    <div class="subtree ">
+        <div class="subtree-title {{child.warningState}}" id="{{child.slug}}">
+        <h3 style="padding: 5px;"> {{ child.title }} </h1>
+        <p style="float:left; padding-left: 5px; padding-right:5px; max-width: 50%; line-height: 1.2em; text-align: left"> {{ child.shortDescription}}</p> 
+        <p style="float:right; padding-left: 5px; padding-right:5px; max-width: 50%; line-height: 1.2em; text-align: right"> Due: {{child.dueDate}}</p>
         
+        <span class="clear" ></span>
         </div>
 
         {% if child.children|length %}

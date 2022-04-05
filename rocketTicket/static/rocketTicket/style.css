@@ -3,6 +3,11 @@ body
 {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
+    background-color: #202020;
+    color: silver;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
 }
 .tree 
 {
@@ -17,14 +22,18 @@ body
 }
 .subtree
 {
-    background-color: rgb(216, 213, 213);
+    
     border-radius: 5px;
     border-width: 1px;
     padding: 10px;
-    border-color: black;
-    border-style: solid;
+    border-color: transparent;
+    
     margin: 5px;
     float: left;
+    border-style: dashed;
+    
+    
+    
 }
 .subtree-title
 {
@@ -32,22 +41,34 @@ body
     line-height: 5px;
     margin:auto;
     max-width: 30em;
+    border-width: 1px;
+    border-color: #404040;
+    border-radius: 3px;
+    border-style: solid;
+    margin-bottom: 5px;
+    background-color: #303030;
+    max-width: 20em;
+    min-width: 15em;
+    padding: 0px;
+    
+    
 }
 
 .tree-container
 {
     border-width: 0px;
     border-top: 2px;
-    border-style: solid;
+    
     border-color: darkgray;
     background-color: white;
     clear:both;
+    z-index: -2;
 
 }
 #titleText
 {
     
-    
+    display: inline-block;
     -webkit-transform:scale(2,1); /* Safari and Chrome */
     -moz-transform:scale(2,1); /* Firefox */
     -ms-transform:scale(2,1); /* IE 9 */
@@ -60,19 +81,70 @@ body
     
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
-    font-size: 3rem;
+    font-size: 2rem;
+
     
     
 }
 .good
 {
-    background-color: forestgreen;
+    background-color: darkgreen;
+}
+.good .clear
+{
+    background-color: silver;
+    border-color: silver;
 }
 .mediocre
 {
-    background-color: yellow;
+    background-color: darkgoldenrod;
+    color: white;
+}
+.mediocre .clear
+{
+    background-color: silver;
+    border-color: silver;
 }
 .bad
 {
-    background-color: red;
+    background-color: darkred;
+}
+.bad .clear
+{
+    background-color: black;
+}
+span.clear 
+{ 
+    clear: both; 
+    display: block; 
+    background-color: maroon;
+    width: 100% - 2px;
+    height: 10px;
+    border-color: maroon;
+    border-width: 1px;
+    border-style: solid;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    
+}
+#svg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  
+  .line{
+    stroke-width:4px;
+    stroke: white
+  }
+.debug-subtree
+{
+    border-color:white;
+}
+.debug-hidesvg
+{
+    stroke:transparent;
 }

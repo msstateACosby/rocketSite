@@ -60,22 +60,24 @@ class Ticket(models.Model):
         returnText = "neutral"
         if (datetime.now().date() > self.dueDate):
             returnText="bad"
-        if (datetime.now().date() + timedelta(weeks=2) > self.dueDate):
+        elif (datetime.now().date() + timedelta(weeks=2) > self.dueDate):
             returnText="mediocre"
         if (self.isComplete):
             returnText = "good"
         return returnText
 
-    def addNodeToTree(self):
+    def addNodeToTree(self, connectionList: list):
         nodeDict = {
             "title" : self.name, 
             "shortDescription": self.shortDescription, 
             "dueDate": self.dueDate.strftime("%m/%d/%Y"),
             "warningState" : self.getWarningState(),
+            "slug" : self.urlName,
             "children": []
         }
         for child in self.children.all():
-            nodeDict["children"].append(child.addNodeToTree())
+            nodeDict["children"].append(child.addNodeToTree(connectionList))
+            connectionList.append((self.urlName, child.urlName))
         return nodeDict
 
     
