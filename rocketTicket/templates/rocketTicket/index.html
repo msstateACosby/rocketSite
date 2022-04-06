@@ -74,6 +74,11 @@
         $('.line').toggleClass("debug-hidesvg");
 
     });
+    $('.subtree-title').click(function (event)
+    {
+        var menu = $(event.target).children('.subtreeMenu');
+        menu.toggleClass("showMenu");
+    })
     window.addEventListener('resize', refreshLines);
     
 </script>

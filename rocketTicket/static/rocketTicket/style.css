@@ -50,6 +50,8 @@ body
     max-width: 20em;
     min-width: 15em;
     padding: 0px;
+    position: relative;
+    cursor: pointer;
     
     
 }
@@ -82,6 +84,7 @@ body
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
     font-size: 2rem;
+    
 
     
     
@@ -125,6 +128,7 @@ span.clear
     border-style: solid;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
+    cursor :auto;
     
 }
 #svg{
@@ -147,4 +151,43 @@ span.clear
 .debug-hidesvg
 {
     stroke:transparent;
+}
+.subtreeMenu
+{
+    position: absolute;
+    top: 7em;
+    left: 10%;
+    width:90%;
+    
+    background-color: white;
+    z-index: 3;
+    visibility: hidden;
+    cursor:auto;
+    padding: 5px;
+}
+.showMenu
+{
+    visibility: visible;
+    
+
+}
+.subtreeRightText
+{
+    float:left; 
+    padding-left: 5px; 
+    padding-right:5px; 
+    max-width: 50%; 
+    line-height: 1.2em; 
+    text-align: left;
+    cursor:auto;
+}
+.subtreeLeftText
+{
+    float:right; 
+    padding-left: 5px; 
+    padding-right:5px; 
+    max-width: 50%; 
+    line-height: 1.2em; 
+    text-align: right;
+    cursor: auto;
 }
