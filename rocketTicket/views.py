@@ -10,6 +10,8 @@ from .models import Ticket
 
 
 def index(request):
+    if (request.method == 'POST'):
+        Ticket.objects.get(urlName= request.POST['nodeName']).toggleComplete()
     tickets=[]
     connectionList = []
     for ticket in Ticket.objects.filter(parentTicket=None):

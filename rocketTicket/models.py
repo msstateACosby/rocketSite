@@ -70,16 +70,21 @@ class Ticket(models.Model):
         nodeDict = {
             "title" : self.name, 
             "shortDescription": self.shortDescription, 
+            "longDescription": self.longDescription,
             "dueDate": self.dueDate.strftime("%m/%d/%Y"),
             "warningState" : self.getWarningState(),
             "slug" : self.urlName,
-            "children": []
+            "creationDate" : self.creationDate,
+            "children": [],
+            "isComplete": self.isComplete
         }
-        for child in self.children.all():
+        for child in self.children.order_by('dueDate'):
             nodeDict["children"].append(child.addNodeToTree(connectionList))
             connectionList.append((self.urlName, child.urlName))
         return nodeDict
-
+    def toggleComplete(self):
+        self.isComplete = not self.isComplete
+        self.save()
     
 class TicketAdmin(admin.ModelAdmin):
     prepopulated_fields = {"urlName": ("name", )}

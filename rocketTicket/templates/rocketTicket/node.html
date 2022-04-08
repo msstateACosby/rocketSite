@@ -2,17 +2,53 @@
     <div class="subtree " style="">
         
         <div class="subtree-title {{child.warningState}}" id="{{child.slug}}">
-        <h3 style="margin:auto; width: fit-content; padding: 5px; border-style: none; border-color: white; border-size: 2px"> {{ child.title }} </h1>
-        <p class="subtreeLeftText"> {{ child.shortDescription}}</p> 
-        <p class="subtreeRightText"> Due: {{child.dueDate}}</p>
-        
-        <span class="clear" ></span>
-        <div class="subtreeMenu" style="text-align: left; color: black">
-            <h4> Edit Node </h4>
-            <button> Mark As Complete </button>
-            <h2> Add Child </h2>
+            <h3 style="cursor: auto; margin-left: auto; margin-right:auto; width: fit-content; padding: 10px; border-style: none; border-color: white; border-size: 2px"> {{ child.title }} </h1>
+            <p class="subtreeRightText"> {{ child.shortDescription}}</p> 
+            <p class="subtreeLeftText"> Due: {{child.dueDate}}</p>
             
-        </div>
+            <span class="clear" ></span>
+
+            <div class="subtreeMenu" >
+                <h4 style="border-width:0; border-bottom: 2px; border-style:solid; border-color: white; float:left "> Node Details </h4>
+                <button class="addNodeMenuButton"style="float: right"> Add Node 
+                    <div class="addNodeMenu">
+                        <form style="text-align: left">
+                            <label for="name">Name: </label>
+                            <input name="name" type="text"><br>
+                            <label for="shortDescription">Short Description: </label><br>
+                            <input name="shortDescripton" type="text"><br>
+                            <label for="longDescription">Long Description </label><br>
+                            <input class="longDescriptionInput" name="longDescription" type="text">
+                            <label for="dueDate">Due Date </label>
+                            <input name="dueDate" type="date">
+                            <input type="submit" name="Add Node">
+                            
+                        </from>
+                    </div>
+                </button>
+                <span style="clear: both; display:block"></span>
+                <h6 style="border-width:0; border-bottom: 1px; border-style:solid; border-color: gray; "> Detailed Description: </h6>
+                <p style="float:left; max-width: 40%"> Creation Date: </p>
+                <p style="max-width: 40%; float: right"> {{ child.creationDate }} </p>
+                <p style="clear: both;"> {{ child.longDescription }} </p>
+                
+                
+                
+                <span class="clear" ></span>
+                <form action = "" method = "post">
+                    {% csrf_token %}
+                    <input type ="hidden" name="nodeName" value="{{child.slug}}" >
+                    <button type = "submit" class="completeButton">
+                    {% if child.isComplete %}
+                        Mark as Uncomplete
+                    {% else %}
+                        Mark as Complete
+                    {% endif %}
+                    </button>
+                </form>
+                
+            </div>
+            
         </div>
 
         {% if child.children|length %}

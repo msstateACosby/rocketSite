@@ -11,7 +11,7 @@
     <link rel="icon" type="image/x-icon" href="{% static 'rocketTicket/rocketIco.png' %}">
 </head>
 <body>
-    <div id = "triggerDebug" style = "width: 200px; height: 3em; background-color: white; color: black; float: left">
+    <div id = "triggerDebug" style = "cursor: pointer; width: 200px; height: 3em; background-color: white; color: black; position: absolute; z-index: 3">
         <h3> Debug Trigger <h3>
     </div>
     <div id='titleText'>
@@ -19,6 +19,7 @@
             Rocket Ticket
         </h1>
     </div>
+    <div style="clear: both"></div>
     <div class=tree>
         {% include "rocketTicket/node.html" with children=Tickets%} 
         </div>
@@ -41,6 +42,7 @@
     var connectionList = JSON.parse(document.getElementById('ConnectionList').textContent);
     console.log(connectionList);
     var i = 0;
+    var currentMenu= null;
     refreshLines();
 
     function refreshLines(){
@@ -77,8 +79,38 @@
     $('.subtree-title').click(function (event)
     {
         var menu = $(event.target).children('.subtreeMenu');
-        menu.toggleClass("showMenu");
-    })
+        
+        if (menu.length == 0) return;
+        
+        if (menu.hasClass("showMenu"))
+        {
+            menu.removeClass("showMenu");
+            $('.showMenu').removeClass("showMenu");
+        }
+        else {
+            $('.showMenu').removeClass("showMenu");
+            menu.addClass("showMenu");
+        }
+        
+        //menu.toggleClass("showMenu");
+        
+    });
+    $('.subtree-title').hover(
+        function()
+        {
+            $(this).addClass('hover');
+        },
+        function()
+        {
+            $(this).removeClass('hover');
+        }
+    );
+    $('.addNodeMenuButton').click(function(event)
+    {
+        console.log("heh")
+        var menu = $(event.target).children('.addNodeMenu').toggleClass('showMenu');
+
+    });
     window.addEventListener('resize', refreshLines);
     
 </script>
